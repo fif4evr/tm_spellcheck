@@ -94,7 +94,6 @@ def main():
 		wrong_words = spellcheck(sanitized_words, dictionary_of_words) #spellcheck the cleaned up words, should be returning messed up words
 		corrected_words = user_fix_words(input_words, wrong_words) #fix the wrong words
 		output_words = fix_corrected_words(input_words, corrected_words) #builds up a list of Words to output, making corrects as necessary
-		import pdb; pdb.set_trace()
 		output_corrected_text(output_words) #operation complete text, could save file
 
 if __name__ == '__main__':
