@@ -52,14 +52,34 @@ def spellcheck(words_to_check, dictionary_of_words):
 
 #Give user a chance to correct
 	#output list of Words
-def user_fix_words(wrong_words):
-	print 'you messed up the following %d words' % (len(wrong_words))
-	print wrong_words
+def user_fix_words(input_words, wrong_words):
+	print 'you messed up the following %d words: %s' % (len(wrong_words), wrong_words)
+
+	corrected_words = []
+	for wrong_word in wrong_words:
+		wrong_word.value = "BANG"
+		corrected_words.append(wrong_word)
+	return corrected_words
+#make corrected text
+	#list of text with corrected words out
+
+def fix_corrected_words(input_words, corrected_words):
+	x = 0
+	output_words = []
+	for input_word in input_words:
+		if (input_word.line == corrected_words[x].line) and (input_word.index == corrected_words[x].index):
+			input_word.value = corrected_words[x].value
+			if x < len(corrected_words) - 1:
+				x += 1
+		output_words.append(input_word)
+	return output_words
+
 
 #output corrected text
 	#doc out
-def output_corrected_text():
-	print 'the text has now been corrected!'
+def output_corrected_text(output_words):
+	print "This is the output text: "
+	print output_words
 
 #runner
 def main():
@@ -72,8 +92,10 @@ def main():
 		input_words = get_input_words(which_file) #make the words list from the filename passed via commandline
 		sanitized_words = sanitize_input(input_words) #clean it up
 		wrong_words = spellcheck(sanitized_words, dictionary_of_words) #spellcheck the cleaned up words, should be returning messed up words
-		user_fix_words(wrong_words) #fix the wrong words
-		output_corrected_text() #operation complete text, could save file
+		corrected_words = user_fix_words(input_words, wrong_words) #fix the wrong words
+		output_words = fix_corrected_words(input_words, corrected_words) #builds up a list of Words to output, making corrects as necessary
+		import pdb; pdb.set_trace()
+		output_corrected_text(output_words) #operation complete text, could save file
 
 if __name__ == '__main__':
 	main()	
